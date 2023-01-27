@@ -9,6 +9,5 @@ process indexReference {
         """
         cd $index_dir
         bowtie2-build $refs $ref_name
-        cd -
         """
 }
