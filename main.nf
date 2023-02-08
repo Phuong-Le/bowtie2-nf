@@ -21,6 +21,6 @@ workflow {
     def sample_ch = Channel.of(params.samples)
     raw_sam_ch = alnReads(sample_ch, index_ch, params.fq_dir, params.output_dir)
     processed_sam = processReads(raw_sam_ch, params.output_dir, no_ref_seqs)
-    
-    processed_sam.out.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
+
+    processed_sam.out.summary.collectFile(name: "${params.output_dir}/aln_summary.txt", keepHeader: true, skip: 1)
 }
