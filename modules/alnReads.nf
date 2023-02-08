@@ -6,7 +6,7 @@ process alnReads {
         path output_dir
 
     output:
-        path raw_sam
+        tuple val(sample) path(raw_sam)
 
     script:
         raw_sam="${output_dir}/aln_reads/${sample}.sam"
