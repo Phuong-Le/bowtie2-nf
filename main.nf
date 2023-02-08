@@ -18,5 +18,5 @@ workflow {
     index_ch = indexReference(params.ref_file,params.ref_name,params.index_dir)
 
     def sample_ch = Channel.of(params.samples)
-    alnReads(sample_ch)
+    alnReads(sample_ch, index_ch, params.fq_dir, params.output_dir)
 }
