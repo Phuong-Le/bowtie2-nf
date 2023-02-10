@@ -25,13 +25,19 @@ workflow {
     index6 = file("${params.index_dir}/${params.ref_name}.rev.2.bt2")
     if (index1.exists() && index2.exists() && index3.exists() && index4.exists() && index5.exists() && index6.exists()) {
         println "indices exist, proceed to alignment"
-        index_ch = Channel.fromPath('*.bt2')
+        indices = Channel.fromPath('*.bt2')
                             .collect()
     } else {
-        index_ch = indexReference(params.ref_file, params.ref_name)
+        indices = indexReference(params.ref_file, params.ref_name)
                             .collect()
-
     }
+
+    // define sample params as a channel
+    sample_param_ch = file(params.sample_params)
+        .splitCsv( sep : '\t' )
+        .map { row -> tuple( row[0], row[1], row[2] ) }
+    raw_sam_ch = alnReads(indices, params.ref_name, sample_param_ch, params.outdir)
+    raw_sam_ch.view()
     // def sample_ch = Channel.of(params.samples)
     // raw_sam_ch = alnReads(sample_ch, index_ch, params.fq_dir, params.outdir)
     // processed_sam = processReads(raw_sam_ch, params.outdir, no_ref_seqs)
