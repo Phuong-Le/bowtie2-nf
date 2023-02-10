@@ -10,8 +10,8 @@ workflow {
     // get the number of seqs in fasta reference
     // no_ref_seqs = file(params.ref_file).countFasta()
 
-    // raw_sam_dir = file("${params.outdir}/aln_reads")
-    // raw_sam_dir.mkdir()
+    raw_sam_dir = file("${params.outdir}/aln_reads")
+    raw_sam_dir.mkdir()
     // sorted_sam_dir = file("${params.outdir}/sorted_aln_reads")
     // sorted_sam_dir.mkdir()
 
@@ -32,14 +32,14 @@ workflow {
                             .collect()
     }
 
-    // define sample params as a channel
-    sample_param_ch = file(params.sample_params)
-        .splitCsv( sep : '\t' )
+    // define sample_params as a channel
+    def sample_params = file(params.sample_params)
+    sample_param_ch = Channel.of(sample_params.text)
+        .splitCsv( sep : '\t')
         .map { row -> tuple( row[0], row[1], row[2] ) }
-    raw_sam_ch = alnReads(indices, params.ref_name, sample_param_ch, params.outdir)
-    raw_sam_ch.view()
-    // def sample_ch = Channel.of(params.samples)
-    // raw_sam_ch = alnReads(sample_ch, index_ch, params.fq_dir, params.outdir)
+
+    raw_sam_ch = alnReads(indices, params.ref_name, sample_param_ch)
+
     // processed_sam = processReads(raw_sam_ch, params.outdir, no_ref_seqs)
 
     // processed_sam.out.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
