@@ -8,7 +8,7 @@ include { processReads } from './modules/processReads.nf'
 
 workflow {
     // get the number of seqs in fasta reference
-    // no_ref_seqs = file(params.ref_file).countFasta()
+    no_ref_seqs = file(params.ref_file).countFasta()
 
     raw_sam_dir = file("${params.outdir}/aln_reads")
     raw_sam_dir.mkdir()
@@ -41,5 +41,5 @@ workflow {
 
     // sorting the raw sam file and summarise reads
     processed_sam = processReads(raw_sam_ch, no_ref_seqs)
-    processed_sam.out.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
+    processed_sam.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
 }
