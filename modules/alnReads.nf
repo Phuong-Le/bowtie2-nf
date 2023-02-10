@@ -7,11 +7,11 @@ process alnReads {
     tuple val(sample), val(fq1), val(fq2) // remember to change val to path when actually running samtools
 
     output:
-    path "${sample}.sam", emit: sam
+    tuple val(sample), path("${sample}.sam")
 
     script:
     """
     echo "${fq1} and ${fq2} have been processed" > "${sample}.sam"
-    bowtie2 -x ${ref_name} -1 ${fq1} -2 ${fq2} --no-unal -p 12 -S "${sample}.sam"
+    #bowtie2 -x ${ref_name} -1 ${fq1} -2 ${fq2} --no-unal -p 12 -S "${sample}.sam"
     """
 }

@@ -12,8 +12,8 @@ workflow {
 
     raw_sam_dir = file("${params.outdir}/aln_reads")
     raw_sam_dir.mkdir()
-    // sorted_sam_dir = file("${params.outdir}/sorted_aln_reads")
-    // sorted_sam_dir.mkdir()
+    sorted_sam_dir = file("${params.outdir}/sorted_aln_reads")
+    sorted_sam_dir.mkdir()
 
     // main workflow
     // getting index files 
@@ -37,10 +37,9 @@ workflow {
     sample_param_ch = Channel.of(sample_params.text)
         .splitCsv( sep : '\t')
         .map { row -> tuple( row[0], row[1], row[2] ) }
-
     raw_sam_ch = alnReads(indices, params.ref_name, sample_param_ch)
 
-    // processed_sam = processReads(raw_sam_ch, params.outdir, no_ref_seqs)
-
-    // processed_sam.out.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
+    // sorting the raw sam file and summarise reads
+    processed_sam = processReads(raw_sam_ch, no_ref_seqs)
+    processed_sam.out.summary.collectFile(name: "${params.outdir}/aln_summary.txt", keepHeader: true, skip: 1)
 }
