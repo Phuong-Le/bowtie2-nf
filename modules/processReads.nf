@@ -11,8 +11,9 @@ process processReads {
 
     shell:
     '''
-    ref_seq_lines=$(seq !{no_ref_seqs})
-    printf "!{sample}\n" > "aln_summary.txt"
-    printf "!{sample}\n%0.s" ${ref_seq_lines}  >> "aln_summary.txt"
+    printf "sample\tref_seqs\tgene_length\tmapped_reads\tunmapped_reads\n" > "aln_summary.txt"
+samtools sort "!{raw_sam}" -o "!{sample}.sam"
+ref_seq_lines=$(seq !{no_ref_seqs})
+paste -d "\t" <(printf "!{sample}\n%0.s" ${ref_seq_lines}) <(samtools idxstats "!{sample}.sam") | head -n -1 >> "aln_summary.txt"
     '''
 }
