@@ -28,7 +28,7 @@ workflow {
         indices = Channel.fromPath('*.bt2')
                             .collect()
     } else {
-        indices = indexReference(params.ref_file, params.ref_name)
+        indices = indexReference(params.ref_file, params.index_file)
                             .collect()
     }
 
@@ -37,7 +37,7 @@ workflow {
     sample_param_ch = Channel.of(sample_params.text)
         .splitCsv( sep : '\t')
         .map { row -> tuple( row[0], row[1], row[2] ) }
-    raw_sam_ch = alnReads(indices, params.ref_name, sample_param_ch)
+    raw_sam_ch = alnReads(indices, params.index_file, sample_param_ch)
 
     // sorting the raw sam file and summarise reads
     processed_sam = processReads(raw_sam_ch, no_ref_seqs)
