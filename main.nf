@@ -25,7 +25,7 @@ workflow {
     index6 = file("${params.index_dir}/${params.ref_name}.rev.2.bt2")
     if (index1.exists() && index2.exists() && index3.exists() && index4.exists() && index5.exists() && index6.exists()) {
         println "indices exist, proceed to alignment"
-        indices = Channel.fromPath('*.bt2')
+        indices = Channel.fromPath("${params.index_dir}/*.bt2")
                             .collect()
     } else {
         indices = indexReference(params.ref_file, params.index_file)
