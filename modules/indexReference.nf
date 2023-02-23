@@ -1,18 +1,17 @@
 process indexReference {
-    publishDir "${params.index_dir}", mode: 'copy'
-
     input:
     path ref_file
-    path index_file
+    path index_dir
+    val ref_name
+
 
     output:
-    path indices
+    path index_dir
 
     script:
-    ref_name = index_file.getBaseName()
-    indices = "${ref_name}.*"
+    index_prefix = "${index_dir}/${ref_name}"
     """
-    bowtie2-build ${ref_file} ${ref_name}
+    bowtie2-build ${ref_file} ${index_prefix}
     """
 
 }
