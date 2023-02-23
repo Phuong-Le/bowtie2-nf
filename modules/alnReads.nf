@@ -10,7 +10,7 @@ process alnReads {
     tuple val(sample), path("${sample}.sam")
     
     script:
-    ref_name = "${params.index_dir}/${index_file.getBaseName()}"
+    ref_name = "${index_file.getParent()}/${index_file.getBaseName()}"
     """
     bowtie2 -x ${ref_name} -1 ${fq1} -2 ${fq2} --no-unal -p 12 -S "${sample}.sam"
     """
