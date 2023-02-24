@@ -32,7 +32,7 @@ ref_file=/path/to/reference/fasta/file
 ref_name=/prefix/of/index/files # ie index name
 index_dir=/path/to/dir/containing/index/files
 sample_params=/path/to/sample/params/file # a tsv file with 3 columns, sample name, path to fastq1 and path to fastq2
-outdir=/path/to/outdir # outdir should contain 2 subdirs with the sam files, and the aln_summary.txt file
+outdir=/path/to/outdir # after execution, outdir should contain 2 subdirs with the sam files, and the aln_summary.txt file
 
 "nextflow run ${nf_script} -c ${config_file} \
 --ref_file ${ref_file} --ref_name ${ref_name} --index_dir ${index_dir}  \
