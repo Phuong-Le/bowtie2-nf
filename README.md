@@ -13,6 +13,8 @@ The main workflow can be found in [main.nf](https://github.com/Phuong-Le/bowtie2
 ## Dependencies
 - [Nextflow](https://www.nextflow.io/)
 - [Docker](https://www.docker.com/) if using own machine or [Singularity](https://sylabs.io/singularity/) if using a shared HPC
+
+if run without a container (e.g. when `-c lsf.config` is not activated)
 - [bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
 - [samtools](https://hcc.unl.edu/docs/applications/app_specific/bioinformatics_tools/data_manipulation_tools/samtools/running_samtools_commands/)
 
