@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y -qq \
         wget \
         zip \
         perl \ 
+        python3 \
+        python-is-python3 \
         zlib1g-dev \  
         libncurses5-dev \ 
         make \ 
