@@ -1,0 +1,12 @@
+Dockerfile*
+docker-compose*
+README.md
+LICENSE
+.vscode
+.git
+.gitignore
+.nextflow*
+*.config
+main.nf
+modules
+demo_files
