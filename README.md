@@ -43,6 +43,9 @@ outdir=/path/to/outdir # after execution, outdir should contain 2 subdirs with t
 
 example on an lsf system like at Sanger
 ```
+module load ISG/singularity/3.10.0
+module load nextflow/22.10.3-5834
+
 bsub -cwd /path/to/working_dir -o %J.out -e %J.err -R "select[mem>1000] rusage[mem=1000]" -M1000 \
     "nextflow run ${nf_script} -c ${config_file} \
         --ref_file ${ref_file} --ref_name ${ref_name} --index_dir ${index_dir}  \
